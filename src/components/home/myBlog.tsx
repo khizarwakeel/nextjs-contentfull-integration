@@ -88,26 +88,28 @@ const MyBlog = async () => {
               <p className="py-4 text-gray-500">
                 {blogDataCont.items[0].fields.description}
               </p>
-              <Link
-                href="/blog-details"
-                className="flex items-center md:text-xl text-base gap-2 mt-2 hover:text-[#719b8f]"
-              >
-                Learn more{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-4"
+              <div className="flex">
+                <Link
+                  href="/blog-details"
+                  className="flex items-center md:text-xl text-base gap-2 mt-2 hover:text-[#719b8f]"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                  />
-                </svg>
-              </Link>
+                  Learn more{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
           <div>
@@ -150,26 +152,28 @@ const MyBlog = async () => {
                     </h1>
                   </Link>
                   <p className="text-gray-500">{items.desc}</p>
-                  <Link
-                    href="/blog-details"
-                    className="flex items-center gap-2 mt-2 hover:text-[#719b8f]"
-                  >
-                    Learn more{" "}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="size-4"
+                  <div className="flex">
+                    <Link
+                      href="/blog-details"
+                      className="flex items-center gap-2 mt-2 hover:text-[#719b8f]"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                      />
-                    </svg>
-                  </Link>
+                      Learn more{" "}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

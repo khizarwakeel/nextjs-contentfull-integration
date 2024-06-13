@@ -29,26 +29,28 @@ const BlogDetailPage = async () => {
   return (
     <section>
       <div className="max-w-3xl mx-auto px-5">
-        <Link
-          href="/"
-          className="flex items-center gap-2 mt-10 hover:text-[#719b8f] text-sm md:text-base text-[#3d483d]"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="md:size-5 size-4"
+        <div className="flex">
+          <Link
+            href="/"
+            className="flex items-center gap-2 mt-10 hover:text-[#719b8f] text-sm md:text-base text-[#3d483d]"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5 8.25 12l7.5-7.5"
-            />
-          </svg>{" "}
-          Back to Home{" "}
-        </Link>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="md:size-5 size-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>{" "}
+            Back to Home{" "}
+          </Link>
+        </div>
         <div className="flex justify-between md:mt-10 mt-8">
           <div className="text-gray-500">June 4, 2024</div>
           <div className="flex gap-5">
@@ -79,26 +81,28 @@ const BlogDetailPage = async () => {
         <div className="prose max-w-full mb-10 md:text-justify lg:px-5 md:mt-10 mt-5">
           {documentToReactComponents(blogDataCont.items[0].fields.body)}
         </div>{" "}
-        <Link
-          href="/"
-          className="flex items-center gap-2 mt-2 hover:text-[#719b8f] text-sm md:text-base text-[#3d483d] mb-10"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="md:size-5 size-4"
+        <div className="flex">
+          <Link
+            href="/"
+            className="flex items-center gap-2 mt-2 hover:text-[#719b8f] text-sm md:text-base text-[#3d483d] mb-10"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5 8.25 12l7.5-7.5"
-            />
-          </svg>{" "}
-          Back to Home{" "}
-        </Link>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="md:size-5 size-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>{" "}
+            Back to Home{" "}
+          </Link>
+        </div>
       </div>
     </section>
   );
