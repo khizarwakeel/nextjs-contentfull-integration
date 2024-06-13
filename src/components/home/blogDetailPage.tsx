@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 const getBlogsData = async () => {
-  const URL = `https://cdn.contentful.com/spaces/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_KEY}&content_type=blog`;
+  const URL = `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.CONTENTFUL_ACCESS_KEY}&content_type=blog`;
   try {
     const response = await fetch(URL, {
       cache: "no-cache",
@@ -21,6 +21,8 @@ const getBlogsData = async () => {
 
 const BlogDetailPage = async () => {
   const blogDataCont = await getBlogsData();
+  console.log("blogDataCont", blogDataCont);
+
   const imageUrl = blogDataCont.includes.Asset[0].fields.file.url;
   const imageWidth =
     blogDataCont.includes.Asset[0].fields.file.details.image.width;

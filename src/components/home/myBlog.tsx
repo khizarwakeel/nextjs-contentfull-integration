@@ -4,7 +4,7 @@ import CardImage from "../../../public/assets/aiGen.webp";
 import Link from "next/link";
 
 const getBlogsData = async () => {
-  const URL = `https://cdn.contentful.com/spaces/756bo1qps4ce/entries?access_token=e2gAdpdzZunrg4ryxiqckuZRfbuMowVHbq8gNjpO59g&content_type=blog`;
+  const URL = `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.CONTENTFUL_ACCESS_KEY}&content_type=blog`;
   try {
     const response = await fetch(URL, {
       cache: "no-cache",
