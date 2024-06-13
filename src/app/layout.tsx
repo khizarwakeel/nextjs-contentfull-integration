@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/shared/navbar";
+import Footer from "@/components/shared/footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const ubuntu = Ubuntu({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Nextjs || Contentfull Blog App",
@@ -16,7 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={ubuntu.className}>
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
