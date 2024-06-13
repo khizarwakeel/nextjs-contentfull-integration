@@ -3,15 +3,12 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import CardImage from "../../../public/assets/aiGen.webp";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 const getBlogsData = async () => {
   const URL = `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.CONTENTFUL_ACCESS_KEY}&content_type=blog`;
   try {
-    const response = await fetch(URL, {
-      cache: "force-cache",
-      next: {
-        revalidate: 60,
-      },
-    });
+    const response = await fetch(URL);
     if (!response.ok) {
       throw new Error("Failed to load data!");
     }
