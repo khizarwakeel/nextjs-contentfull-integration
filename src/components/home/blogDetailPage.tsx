@@ -6,7 +6,7 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 export const dynamic = "force-dynamic";
 
 const getBlogsData = async () => {
-  const URL = `https://cdn.contentful.com/spaces/756bo1qps4ce/entries?access_token=e2gAdpdzZunrg4ryxiqckuZRfbuMowVHbq8gNjpO59g&content_type=blog`;
+  const URL = `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.CONTENTFUL_ACCESS_KEY}&content_type=blog`;
   try {
     const response = await fetch(URL);
     if (!response.ok) {
@@ -50,7 +50,7 @@ const BlogDetailPage = async () => {
                 d="M15.75 19.5 8.25 12l7.5-7.5"
               />
             </svg>{" "}
-            Back to Home{" "}
+            Back to home{" "}
           </Link>
         </div>
         <div className="flex justify-between md:mt-10 mt-8">
@@ -102,7 +102,7 @@ const BlogDetailPage = async () => {
                 d="M15.75 19.5 8.25 12l7.5-7.5"
               />
             </svg>{" "}
-            Back to Home{" "}
+            Back to home{" "}
           </Link>
         </div>
       </div>
