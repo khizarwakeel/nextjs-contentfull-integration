@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
-import CardImage from "../../../public/assets/aiGen.webp";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -21,6 +20,7 @@ const getBlogsData = async () => {
 
 const MyBlog = async () => {
   const blogDataCont = await getBlogsData();
+  console.log(blogDataCont.includes.Asset, "Blogsss");
   const imageUrl = blogDataCont.includes.Asset[0].fields.file.url;
   const imageWidth =
     blogDataCont.includes.Asset[0].fields.file.details.image.width;
@@ -30,19 +30,19 @@ const MyBlog = async () => {
   const cardsData = [
     {
       title: blogDataCont.items[0].fields.title,
-      img: CardImage,
+      img: imageUrl,
       desc: ` AI is already stealing writers${"'"} work. Now they${"'"}re
                   losing jobs over false accusations of using it.`,
     },
     {
       title: blogDataCont.items[0].fields.title,
-      img: CardImage,
+      img: imageUrl,
       desc: ` AI is already stealing writers${"'"} work. Now they${"'"}re
                   losing jobs over false accusations of using it.`,
     },
     {
       title: blogDataCont.items[0].fields.title,
-      img: CardImage,
+      img: imageUrl,
       desc: ` AI is already stealing writers${"'"} work. Now they${"'"}re
                   losing jobs over false accusations of using it.`,
     },
@@ -125,9 +125,11 @@ const MyBlog = async () => {
               <div className="md:col-span-5">
                 <Link href={"/blog-details"}>
                   <Image
-                    src={items.img}
+                    src={`https:${items.img}`}
                     alt="cardImage"
                     className="rounded-xl h-full w-full"
+                    width={imageWidth}
+                    height={imageHeight}
                   />
                 </Link>
               </div>
