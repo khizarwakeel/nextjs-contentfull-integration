@@ -7,7 +7,9 @@ export const dynamic = "force-dynamic";
 const getBlogsData = async () => {
   const URL = `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.CONTENTFUL_ACCESS_KEY}&content_type=blog`;
   try {
-    const response = await fetch(URL);
+    const response = await fetch(URL, {
+      cache: "no-store",
+    });
     if (!response.ok) {
       throw new Error("Failed to load data!");
     }
@@ -20,33 +22,11 @@ const getBlogsData = async () => {
 
 const MyBlog = async () => {
   const blogDataCont = await getBlogsData();
-  console.log(blogDataCont.includes.Asset, "Blogsss");
   const imageUrl = blogDataCont.includes.Asset[0].fields.file.url;
   const imageWidth =
     blogDataCont.includes.Asset[0].fields.file.details.image.width;
   const imageHeight =
     blogDataCont.includes.Asset[0].fields.file.details.image.height;
-
-  const cardsData = [
-    {
-      title: blogDataCont.items[0].fields.title,
-      img: imageUrl,
-      desc: ` AI is already stealing writers${"'"} work. Now they${"'"}re
-                  losing jobs over false accusations of using it.`,
-    },
-    {
-      title: blogDataCont.items[0].fields.title,
-      img: imageUrl,
-      desc: ` AI is already stealing writers${"'"} work. Now they${"'"}re
-                  losing jobs over false accusations of using it.`,
-    },
-    {
-      title: blogDataCont.items[0].fields.title,
-      img: imageUrl,
-      desc: ` AI is already stealing writers${"'"} work. Now they${"'"}re
-                  losing jobs over false accusations of using it.`,
-    },
-  ];
 
   return (
     <>
@@ -59,7 +39,21 @@ const MyBlog = async () => {
           </div>
           <div>
             <div className="flex justify-between md:mt-16 mt-8">
-              <div className="text-gray-500">June 4, 2024</div>
+              <div className="text-gray-500">
+                {(() => {
+                  const date = new Date(blogDataCont.items[0].sys.createdAt);
+                  const day = date.toLocaleString("en-US", {
+                    day: "2-digit",
+                  });
+                  const month = date.toLocaleString("en-US", {
+                    month: "long",
+                  });
+                  const year = date.toLocaleString("en-US", {
+                    year: "numeric",
+                  });
+                  return `${day} / ${month} / ${year}`;
+                })()}
+              </div>
               <div className="flex gap-5">
                 <FaLinkedinIn
                   className="h-6 w-6 text-[#3d483d]"
@@ -69,12 +63,12 @@ const MyBlog = async () => {
               </div>
             </div>
             <div>
-              <Link href={"/blog-details"}>
+              <Link href={blogDataCont.items[0].fields.slug}>
                 <h1 className="text-[#719b8f] md:text-4xl text-xl py-10 font-bold">
                   {blogDataCont.items[0].fields.title}
                 </h1>
               </Link>
-              <Link href={"/blog-details"}>
+              <Link href={blogDataCont.items[0].fields.slug}>
                 <Image
                   src={`https:${imageUrl}`}
                   width={imageWidth}
@@ -90,7 +84,7 @@ const MyBlog = async () => {
               </p>
               <div className="flex">
                 <Link
-                  href="/blog-details"
+                  href={blogDataCont.items[0].fields.slug}
                   className="flex items-center md:text-xl text-base gap-2 mt-2 hover:text-[#719b8f]"
                 >
                   Learn more{" "}
@@ -117,69 +111,89 @@ const MyBlog = async () => {
               Latest Blogs
             </h2>
           </div>
-          {cardsData.map((items, index) => (
-            <div
-              key={index}
-              className="grid md:grid-cols-12 lg:gap-10 gap-5 mb-10"
-            >
-              <div className="md:col-span-5">
-                <Link href={"/blog-details"}>
-                  <Image
-                    src={`https:${items.img}`}
-                    alt="cardImage"
-                    className="rounded-xl h-full w-full"
-                    width={imageWidth}
-                    height={imageHeight}
-                  />
-                </Link>
-              </div>
-              <div className="md:col-span-7">
-                <div className="flex items-center justify-between">
-                  <div className="text-gray-500">June 4, 2024</div>
-                  <div className="flex items-center gap-5">
-                    <FaLinkedinIn
-                      className="h-5 w-5 text-[#3d483d]"
-                      title="Linkedin"
+          {blogDataCont.items.map((items: any, index: any) => {
+            const blogImage = blogDataCont.includes.Asset.find(
+              (img: any) => img.sys.id === items.fields.image.sys.id
+            );
+            const imgURL = blogImage.fields.file.url;
+            return (
+              <div
+                key={index}
+                className="grid md:grid-cols-12 lg:gap-10 gap-5 mb-10"
+              >
+                <div className="md:col-span-5">
+                  <Link href={items.fields.slug}>
+                    <Image
+                      src={`https:${imgURL}`}
+                      alt="cardImage"
+                      className="rounded-xl h-full w-full"
+                      width={500}
+                      height={500}
                     />
-                    <FaGithub
-                      className="h-5 w-5 text-[#3d483d]"
-                      title="GitHub"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Link href={"/blog-details"}>
-                    <h1 className="text-[#719b8f] lg:text-3xl text-xl py-2 font-bold">
-                      {items.title}
-                    </h1>
                   </Link>
-                  <p className="text-gray-500">{items.desc}</p>
-                  <div className="flex">
-                    <Link
-                      href="/blog-details"
-                      className="flex items-center gap-2 mt-2 hover:text-[#719b8f]"
-                    >
-                      Learn more{" "}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="size-4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                        />
-                      </svg>
+                </div>
+                <div className="md:col-span-7">
+                  <div className="flex items-center justify-between">
+                    <div className="text-gray-500">
+                      {(() => {
+                        const date = new Date(items.sys.createdAt);
+                        const day = date.toLocaleString("en-US", {
+                          day: "2-digit",
+                        });
+                        const month = date.toLocaleString("en-US", {
+                          month: "long",
+                        });
+                        const year = date.toLocaleString("en-US", {
+                          year: "numeric",
+                        });
+                        return `${day} / ${month} / ${year}`;
+                      })()}
+                    </div>
+                    <div className="flex items-center gap-5">
+                      <FaLinkedinIn
+                        className="h-5 w-5 text-[#3d483d]"
+                        title="Linkedin"
+                      />
+                      <FaGithub
+                        className="h-5 w-5 text-[#3d483d]"
+                        title="GitHub"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <Link href={items.fields.slug}>
+                      <h1 className="text-[#719b8f] lg:text-3xl text-xl py-2 font-bold">
+                        {items.fields.title}
+                      </h1>
                     </Link>
+                    <p className="text-gray-500">{items.fields.description}</p>
+                    <div className="flex">
+                      <Link
+                        href={items.fields.slug}
+                        className="flex items-center gap-2 mt-2 hover:text-[#719b8f]"
+                      >
+                        Learn more{" "}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="size-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </>

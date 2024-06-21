@@ -8,7 +8,9 @@ export const dynamic = "force-dynamic";
 const getBlogsData = async () => {
   const URL = `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.CONTENTFUL_ACCESS_KEY}&content_type=blog`;
   try {
-    const response = await fetch(URL);
+    const response = await fetch(URL, {
+      cache: "no-store",
+    });
     if (!response.ok) {
       throw new Error("Failed to load data!");
     }
@@ -19,15 +21,31 @@ const getBlogsData = async () => {
   }
 };
 
-const BlogDetailPage = async () => {
-  const blogDataCont = await getBlogsData();
-  console.log("blogDataCont", blogDataCont);
+interface IProp {
+  slug: string;
+}
 
-  const imageUrl = blogDataCont.includes.Asset[0].fields.file.url;
-  const imageWidth =
-    blogDataCont.includes.Asset[0].fields.file.details.image.width;
-  const imageHeight =
-    blogDataCont.includes.Asset[0].fields.file.details.image.height;
+const BlogDetailPage = async ({ slug }: IProp) => {
+  const blogDataCont = await getBlogsData();
+
+  // Blog Detail Logic
+  const blogDetailData = blogDataCont.items.find(
+    (blogDetailsInfo: any) => blogDetailsInfo.fields.slug === slug
+  );
+
+  const blogImage = blogDataCont.includes.Asset.find(
+    (img: any) => img.sys.id === blogDetailData.fields.image.sys.id
+  );
+
+  // const author = blogDataCont.includes.Asset.find(
+  //   (img: any) => img.fields.author.sys.id === blogDetailData.fields.image.sys.id
+  // );
+
+  const imgURL = blogImage.fields.file.url;
+  const imgWidth = blogImage.fields.file.details.image.width;
+  const imgHeight = blogImage.fields.file.details.image.height;
+  const imgDesc = blogImage.fields.title;
+
   return (
     <section>
       <div className="max-w-3xl mx-auto px-5">
@@ -62,26 +80,25 @@ const BlogDetailPage = async () => {
         </div>
         <div className="flex flex-col items-center">
           <h1 className="text-center md:text-4xl text-xl font-bold md:mt-10 mt-8 mb-4 text-[#719b8f]">
-            9 Proven Strategies and Signs of High-Functioning Anxiety
+            {blogDetailData.fields.title}
           </h1>
-          <div className="text-left mb-4 text-xl text-[#719b8f] font-bold px-4">
-            <span className="text-black font-normal">Written by</span> | John
-            Doe
+          <div className="text-left mb-4 md:text-base text-sm text-[#719b8f] font-bold px-4">
+            <span className="text-black font-normal">Written by</span> | {"Khizar Wakeel"}
           </div>
         </div>
         <div>
           <Image
-            src={`https:${imageUrl}`}
-            width={imageWidth}
-            height={imageHeight}
-            alt={blogDataCont.items[0].fields.title}
-            title={blogDataCont.items[0].fields.title}
+            src={`https:${imgURL}`}
+            width={imgWidth}
+            height={imgHeight}
+            alt={imgDesc}
+            title={imgDesc}
             className="h-full w-full rounded-xl flex justify-center"
             // placeholder="blur"
           />
         </div>
         <div className="prose max-w-full mb-10 md:text-justify lg:px-5 md:mt-10 mt-5">
-          {documentToReactComponents(blogDataCont.items[0].fields.body)}
+          {documentToReactComponents(blogDetailData.fields.body)}
         </div>{" "}
         <div className="flex">
           <Link
