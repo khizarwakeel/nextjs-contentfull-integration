@@ -22,15 +22,11 @@ const getBlogsData = async () => {
 
 const MyBlog = async () => {
   const blogDataCont = await getBlogsData();
-  const imageUrl =
-    blogDataCont.includes.Asset[blogDataCont.includes.Asset.length - 1].fields
-      .file.url;
-  const imageWidth =
-    blogDataCont.includes.Asset[blogDataCont.includes.Asset.length - 1].fields
-      .file.details.image.width;
-  const imageHeight =
-    blogDataCont.includes.Asset[blogDataCont.includes.Asset.length - 1].fields
-      .file.details.image.height;
+
+  const blogImage = blogDataCont.includes.Asset.find(
+    (img: any) => img.sys.id === blogDataCont.items[0].fields.image.sys.id
+  );
+  const imgURL = blogImage.fields.file.url;
 
   return (
     <>
@@ -74,9 +70,15 @@ const MyBlog = async () => {
               </Link>
               <Link href={blogDataCont.items[0].fields.slug}>
                 <Image
-                  src={`https:${imageUrl}`}
-                  width={imageWidth}
-                  height={imageHeight}
+                  src={`https:${imgURL}`}
+                  width={
+                    blogDataCont.includes.Asset[0].fields.file.details.image
+                      .width
+                  }
+                  height={
+                    blogDataCont.includes.Asset[0].fields.file.details.image
+                      .height
+                  }
                   alt={blogDataCont.items[0].fields.title}
                   title={blogDataCont.items[0].fields.title}
                   className="h-full w-full rounded-xl flex justify-center"
