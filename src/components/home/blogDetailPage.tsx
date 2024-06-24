@@ -9,7 +9,7 @@ const getBlogsData = async () => {
   const URL = `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.CONTENTFUL_ACCESS_KEY}&content_type=blog`;
   try {
     const response = await fetch(URL, {
-      cache: "no-store",
+      cache: "default",
     });
     if (!response.ok) {
       throw new Error("Failed to load data!");
@@ -83,7 +83,8 @@ const BlogDetailPage = async ({ slug }: IProp) => {
             {blogDetailData.fields.title}
           </h1>
           <div className="text-left mb-4 md:text-base text-sm text-[#719b8f] font-bold px-4">
-            <span className="text-black font-normal">Written by</span> | {"Khizar Wakeel"}
+            <span className="text-black font-normal">Written by</span> |{" "}
+            {"Khizar Wakeel"}
           </div>
         </div>
         <div>
