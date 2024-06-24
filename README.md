@@ -1,1 +1,1 @@
-Blog App using TypeScript, Nextjs, TailwindCSS, Contentfull
+Blog App using TypeScript, Nextjs, TailwindCSS, Contentful
