@@ -22,11 +22,15 @@ const getBlogsData = async () => {
 
 const MyBlog = async () => {
   const blogDataCont = await getBlogsData();
-  const imageUrl = blogDataCont.includes.Asset[0].fields.file.url;
+  const imageUrl =
+    blogDataCont.includes.Asset[blogDataCont.includes.Asset.length - 1].fields
+      .file.url;
   const imageWidth =
-    blogDataCont.includes.Asset[0].fields.file.details.image.width;
+    blogDataCont.includes.Asset[blogDataCont.includes.Asset.length - 1].fields
+      .file.details.image.width;
   const imageHeight =
-    blogDataCont.includes.Asset[0].fields.file.details.image.height;
+    blogDataCont.includes.Asset[blogDataCont.includes.Asset.length - 1].fields
+      .file.details.image.height;
 
   return (
     <>
